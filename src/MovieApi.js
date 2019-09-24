@@ -1,4 +1,4 @@
-import * as Math from './MathLib.js';
+import * as Math from './libs/MathLib.js';
 const data = require('./movies/moviesDB.json');
 
 /**

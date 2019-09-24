@@ -1,6 +1,7 @@
-import React from 'react'
+import React from 'react';
 import { text_truncate } from '../libs/textLib';
 import '../css/movieItem.css';
+import { ImageBaseUrl, posterSizes } from '../libs/staticUrls'
 
 class MovieItem extends React.Component {
 
@@ -9,8 +10,8 @@ class MovieItem extends React.Component {
 
         return (
             <div>
-                <figure className="movie-item" style={{width:"200px"}}>
-                    <img className="img-fluid" src={"http://image.tmdb.org/t/p/w500/" + this.props.movie.poster_path} alt="Movie Poster" />
+                <figure className="movie-item m-2" style={{width:"14em"}} >
+                    <img className="img-fluid" src={ImageBaseUrl + posterSizes['342'] + this.props.movie.poster_path} alt="Movie Poster" />
 
                     <figcaption>
                         <h5>{text_truncate(movie.title, 26)}</h5>
@@ -21,7 +22,7 @@ class MovieItem extends React.Component {
                         </div>
                     </figcaption>
                 </figure>
-                </div>
+            </div>
         )
 
     }
