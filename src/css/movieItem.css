@@ -1,0 +1,7 @@
+
+
+.movie-item:hover{
+    -webkit-transform: scale(1.04);
+    transform: scale(1.04);
+    box-shadow: 0 -3px 20px #444;
+}

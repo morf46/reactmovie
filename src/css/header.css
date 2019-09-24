@@ -1,0 +1,52 @@
+.header-rotate {
+    -webkit-transform: translate3d(0, 0, 0);
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    backface-visibility: hidden;
+    outline: 1px solid transparent;
+    -webkit-transform: rotate(-4.5deg);
+    -moz-transform: rotate(-4.5deg);
+    -ms-transform: rotate(-4.5deg);
+    -o-transform: rotate(-4.5deg);
+    transform: rotate(-4.5deg);
+    -webkit-transform-origin: 0 0;
+    -moz-transform-origin: 0 0;
+    -o-transform-origin: 0 0;
+    -ms-transform-origin: 0 0;
+    transform-origin: 0 0;
+}
+
+.App-header {
+    overflow: hidden;
+    position: relative;
+}
+
+.header-lead {
+    position: absolute;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    bottom: 25px;
+}
+
+.header-rotate-child {
+    position: absolute;
+}
+
+.header-image {
+    height: 500px;
+    object-fit: cover;
+    object-position: 0% 30%;
+    margin-left: -4%;
+
+}
+
+.header-title {
+    
+    background: linear-gradient(to right, #620f0f ,#2c0b07);
+    background-image: ;
+    padding-top: 50px;
+    width: 105%;
+    padding-bottom:75px;
+    margin-left: -4%;
+    padding-left: 150px; 
+}
