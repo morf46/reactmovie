@@ -1,7 +1,8 @@
 import React from 'react';
 import { text_truncate } from '../libs/textLib';
-import '../css/movieItem.css';
-import { ImageBaseUrl, posterSizes } from '../libs/staticUrls'
+import { ImageBaseUrl, posterSizes } from '../libs/staticData'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import MovieItemGenreList from './movieitemgenrelist';
 
 class MovieItem extends React.Component {
 
@@ -10,15 +11,15 @@ class MovieItem extends React.Component {
 
         return (
             <div>
-                <figure className="movie-item m-2" style={{width:"14em"}} >
+                <figure className="movie-item m-2" style={{ width: "14em" }} >
                     <img className="img-fluid" src={ImageBaseUrl + posterSizes['342'] + this.props.movie.poster_path} alt="Movie Poster" />
 
                     <figcaption>
-                        <h5>{text_truncate(movie.title, 26)}</h5>
-                        <p>genres,genres</p>
-                        <div className="rating">
-                            <i className="fa fa-heart"></i>
-                            <h4>{movie.vote_average}</h4>
+                        <h5 className="movie-item-caption">{text_truncate(movie.title, 26)}</h5>
+                        <MovieItemGenreList genres={movie.genre_ids} />
+                        <div className="rating-box">
+                            <FontAwesomeIcon icon="star" className="mr-2 mb-2 rating-icon" />
+                            <h4 className="rating-value">{movie.vote_average}</h4>
                         </div>
                     </figcaption>
                 </figure>

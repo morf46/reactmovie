@@ -1,6 +1,6 @@
 import React from 'react';
 import "../css/header.css";
-import { ImageBaseUrl, backdropSizes } from '../libs/staticUrls';
+import { ImageBaseUrl, backdropSizes } from '../libs/staticData';
 
 
 class Header extends React.Component {

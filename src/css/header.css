@@ -24,8 +24,12 @@
 
 .header-lead {
     position: absolute;
-    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    text-shadow: -1px -1px 0 #444, 1px -1px 0 #444, -1px 1px 0 #444, 1px 1px 0 #444;
     bottom: 25px;
+    padding-left: 2.5rem;
+    font-size: 3.8em;
+    line-height: 1.2;
+    font-weight: 700;
 }
 
 .header-rotate-child {
@@ -37,16 +41,13 @@
     object-fit: cover;
     object-position: 0% 30%;
     margin-left: -4%;
-
 }
 
 .header-title {
-    
-    background: linear-gradient(to right, #620f0f ,#2c0b07);
+    background: linear-gradient(to right, #620f0f, #2c0b07);
     background-image: ;
     padding-top: 50px;
     width: 105%;
-    padding-bottom:75px;
+    padding-bottom: 75px;
     margin-left: -4%;
-    padding-left: 150px; 
 }
