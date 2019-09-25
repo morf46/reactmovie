@@ -4,13 +4,16 @@ import './css/bootstrap.scss';
 import Footer from './components/footer';
 import Header from './components/header';
 import MovieContainer from './components/moviecontainer';
-import MovieItem from './components/movieitem';
+import GenreFilterHeader from './components/GenreFilterHeader';
+
 import * as MovieApi from './MovieApi.js';
 
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faFacebook, faTwitter, faSnapchat, faInstagram, faImdb } from '@fortawesome/free-brands-svg-icons'
 import { faHeart, faStar } from '@fortawesome/free-solid-svg-icons'
+
+
 
 
 
@@ -26,7 +29,7 @@ class App extends React.Component {
     };
 
 
-    this.filterByGenre.bind(this);
+    this.filterByGenre = this.filterByGenre.bind(this);
   }
 
   /**
@@ -48,15 +51,10 @@ class App extends React.Component {
 
 
         <Header movie={this.state.movie} />
-        
-        <div className="container d-flex flex-row  mb-1 justify-content-center">
-
-          <button className="btn btn-primary m-2" onClick={() => this.filterByGenre(-1)} >All</button>
-          <button className="btn btn-primary m-2" onClick={() => this.filterByGenre(28)} >Action</button>
-          <button className="btn btn-primary m-2" onClick={() => this.filterByGenre(14)} >Fantasy</button>
 
 
-        </div>
+        <GenreFilterHeader filterByGenreFunc={this.filterByGenre} />
+
         <MovieContainer movies={this.state.movies} />
 
 
