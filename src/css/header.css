@@ -24,7 +24,6 @@
 
 .header-lead {
     position: absolute;
-    text-shadow: -1px -1px 0 #444, 1px -1px 0 #444, -1px 1px 0 #444, 1px 1px 0 #444;
     bottom: 25px;
     padding-left: 2.5rem;
     font-size: 3.8em;
@@ -44,10 +43,90 @@
 }
 
 .header-title {
-    background: linear-gradient(to right, #620f0f, #2c0b07);
-    background-image: ;
+    background: linear-gradient(155deg, #030e55, #0066ff);
     padding-top: 50px;
     width: 105%;
     padding-bottom: 75px;
     margin-left: -4%;
 }
+
+/* movie caption*/
+.swipeCaption h1 {
+    position: absolute;
+    bottom: -15px;
+    left: 50px;
+    color: #0066ff;
+    font-weight: bolder;
+    text-transform: uppercase;
+}
+
+.swipeCaption h1 span {
+    padding-left: 100px;
+    margin-left: -110px;
+    position: relative;
+    float: left;
+    clear: both;
+    display: inline-block;
+    background: #000;
+    line-height: 60px;
+    white-space: nowrap;
+}
+
+.swipeCaption h1 span:after {
+    content: " ";
+    border-right: 30px solid transparent;
+    border-bottom: 60px solid black;
+    position: absolute;
+    right: -29px;
+    top: 0px;
+}
+
+.swipeCaption h1 span+span {
+    padding-left: 100px;
+    margin-left: -110px;
+    float: left;
+    clear: both;
+    display: inline-block;
+    background-color: black;
+    line-height: 60px;
+    position: relative;
+    border-right: 0;
+    white-space: nowrap;
+}
+
+.swipeCaption h1 span+span:after {
+    content: " ";
+    border-left: 30px solid black;
+    border-bottom: 60px solid transparent;
+    position: absolute;
+    right: -59px;
+    top: 0px;
+}
+
+/*Swipe controls */
+div.swipeControl {
+    background-color: black;
+    width: 24px;
+    height: 24px;
+    margin-left: 10px;
+    border: 2px solid #fff;
+    
+}
+
+div.swipeControl:hover {
+    
+    border: 2px solid #0099ff;
+}
+
+
+ul.swipeControl {
+    list-style: none;
+    position: absolute;
+    bottom: 15px;
+    right: 150px;
+}
+
+ul.swipeControl li {
+    float: left;
+}
+
