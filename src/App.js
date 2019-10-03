@@ -24,7 +24,7 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      movie: MovieApi.getMovieAtRandom(),
+      popular: MovieApi.getPopularMovies(),
       movies: MovieApi.getMoviesRating(false)
     };
 
@@ -50,7 +50,7 @@ class App extends React.Component {
 
 
 
-        <Header movie={this.state.movie} />
+        <Header popular={this.state.popular} />
 
 
         <GenreFilterHeader filterByGenreFunc={this.filterByGenre} />

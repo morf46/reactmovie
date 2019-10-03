@@ -39,7 +39,7 @@
     height: 500px;
     object-fit: cover;
     object-position: 0% 30%;
-    margin-left: -4%;
+    width:100%;
 }
 
 .header-title {
@@ -49,6 +49,23 @@
     padding-bottom: 75px;
     margin-left: -4%;
 }
+
+/*swipe control*/
+.swipe {
+    overflow: hidden;
+    visibility: hidden;
+    position: relative;
+    margin-left: -4%;
+  }
+  .swipe-wrap {
+    overflow: hidden;
+    position: relative;
+  }
+  .swipe-wrap > div {
+    float: left;
+    width: 100%;
+    position: relative;
+  }
 
 /* movie caption*/
 .swipeCaption h1 {
@@ -66,7 +83,6 @@
     position: relative;
     float: left;
     clear: both;
-    display: inline-block;
     background: #000;
     line-height: 60px;
     white-space: nowrap;
@@ -86,7 +102,6 @@
     margin-left: -110px;
     float: left;
     clear: both;
-    display: inline-block;
     background-color: black;
     line-height: 60px;
     position: relative;

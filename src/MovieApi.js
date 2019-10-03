@@ -73,3 +73,20 @@ export function getMovieAtRandom() {
 
 }
 
+/**
+ * Returns Popular Movies.
+ * 
+ * @returns {Movie|Array} - Movie Array
+ */
+export function getPopularMovies() {
+
+    var LocalArray = [];
+
+    for (let i = 0; i < 5; i++) {
+        LocalArray.push(getMovieAtRandom());
+    }
+
+    return LocalArray;
+
+}
+
