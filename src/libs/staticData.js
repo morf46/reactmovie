@@ -42,4 +42,5 @@ export var genres_map = {
 };
 
 
-export const genres_options = Object.entries(genres_map).map(([k, v]) => ({ value: k, label: v }))
+export const genres_options = Object.entries(genres_map).map(([k, v]) => ({ value: k, label: v }));
+

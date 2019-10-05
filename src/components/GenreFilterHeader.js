@@ -22,6 +22,7 @@ class GenreFilterHeader extends React.Component {
     if (selectedOption !== null && selectedOption !== undefined && selectedOption.length > 0) {
       genreArray = selectedOption.map(x => parseInt(x.value));
     }
+    
     this.props.filterByGenreFunc(genreArray);
 
   };
