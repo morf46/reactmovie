@@ -35,13 +35,11 @@ class Header extends React.Component {
     }
 
     updateHeaderImageDimensions = () => {
-        this.setState((state) => {
-            return {
-                swipeWidth: this.CalculateHeaderDimensions()
-            }
+        this.setState({
+            swipeWidth: this.CalculateHeaderDimensions()
         });
     }
-    
+
     componentDidMount() {
         window.addEventListener('resize', this.updateHeaderImageDimensions);
 

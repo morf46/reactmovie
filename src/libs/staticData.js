@@ -40,3 +40,6 @@ export var genres_map = {
     10752: 'War',
     10770: 'TV Movie'
 };
+
+
+export const genres_options = Object.entries(genres_map).map(([k, v]) => ({ value: k, label: v }))

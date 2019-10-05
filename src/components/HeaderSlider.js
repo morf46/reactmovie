@@ -64,8 +64,8 @@ class HeaderSlider extends React.Component {
                     transitionEnd={this.onTransactionEnd}>
 
                     {
-                        this.props.popular.map(x =>
-                            <HeaderSliderImage movie={x} width={this.props.width} />
+                        this.props.popular.map(movie =>
+                            <HeaderSliderImage key={movie.id} movie={movie} width={this.props.width} />
                         )
                     }
 

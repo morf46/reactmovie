@@ -14,8 +14,8 @@ class MovieContainer extends React.Component {
 
                 <section style={{ minHeight: "100vh", display: "flex", flexWrap: "wrap", alignItems: "flex-start", justifyContent:"space-between" }}>
                     {
-                        this.props.movies.map(x =>
-                            <MovieItem key={x.id} movie={x} />
+                        this.props.movies.map(movie =>
+                            <MovieItem key={movie.id} movie={movie} />
                         )
                     }
                 </section>

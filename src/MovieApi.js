@@ -38,13 +38,13 @@ export function getMovieByTitle(name) {
  * Returns movies sorted by Rating, optional filters by genre
  * 
  * @param {bool} ascending - Return movies in ascending order
- * @param {GenreID} [GenreID] - Genre ID
+ * @param {number|Array} [GenreID] - Genre ID
  */
 export function getMoviesRating(ascending, GenreID) {
     let LocalData = data;
 
-    if (GenreID !== undefined && GenreID > 0) {
-        LocalData = LocalData.filter(x => x.genre_ids.includes(GenreID));
+    if (GenreID !== undefined && GenreID.length > 0) {
+        LocalData = data.filter(x => x.genre_ids.includes(GenreID));
     }
 
     return LocalData.sort((a, b) => {

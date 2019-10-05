@@ -38,7 +38,7 @@ class App extends React.Component {
    * @param {number} GenreID 
    */
   filterByGenre(GenreID) {
-    this.setState({ movie: this.state.movie, movies: MovieApi.getMoviesRating(false, GenreID) });
+    this.setState({ movies: MovieApi.getMoviesRating(false, GenreID) });
   }
 
   render() {
