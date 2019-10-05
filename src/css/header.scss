@@ -43,7 +43,7 @@
 }
 
 .header-title {
-    background: linear-gradient(155deg, #030e55, #0066ff);
+    background: linear-gradient(155deg, $orange, $yellow);
     padding-top: 50px;
     width: 105%;
     padding-bottom: 75px;
@@ -72,7 +72,7 @@
     position: absolute;
     bottom: -15px;
     left: 50px;
-    color: #0066ff;
+    color: $yellow;
     font-weight: bolder;
     text-transform: uppercase;
 }
@@ -130,7 +130,7 @@ div.swipeControl {
 
 div.swipeControl:hover {
     
-    border: 2px solid #0099ff;
+    border: 2px solid $yellow;
 }
 
 
