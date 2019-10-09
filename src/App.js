@@ -25,11 +25,14 @@ class App extends React.Component {
 
     this.state = {
       popular: MovieApi.getPopularMovies(),
-      movies: MovieApi.getMoviesRating(false)
+      movies: MovieApi.getMoviesRating(false),
+      searchTerm: null,
+      genreID: null
     };
 
 
     this.filterByGenre = this.filterByGenre.bind(this);
+    this.filterBySearchTerm = this.filterBySearchTerm.bind(this);
   }
 
   /**
@@ -38,7 +41,18 @@ class App extends React.Component {
    * @param {number} GenreID 
    */
   filterByGenre(GenreID) {
-    this.setState({ movies: MovieApi.getMoviesRating(false, GenreID) });
+    this.setState({ movies: MovieApi.getMoviesRating(false, GenreID, this.state.searchTerm), genreID: GenreID });
+  }
+
+  /**
+   * Filters movies by SearchTerm
+   * 
+   * @param {string} SearchTerm 
+   */
+  filterBySearchTerm(SearchTerm) {
+
+    this.setState({ movies: MovieApi.getMoviesRating(false, this.state.genreID, SearchTerm), searchTerm: SearchTerm });
+
   }
 
   render() {
@@ -53,7 +67,7 @@ class App extends React.Component {
         <Header popular={this.state.popular} />
 
 
-        <GenreFilterHeader filterByGenreFunc={this.filterByGenre} />
+        <GenreFilterHeader filterByGenreFunc={this.filterByGenre} SearchMoviesHandle={this.filterBySearchTerm} />
 
         <MovieContainer movies={this.state.movies} />
 

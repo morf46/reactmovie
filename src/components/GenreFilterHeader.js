@@ -2,6 +2,7 @@ import React from 'react';
 import { genres_options } from '../libs/staticData';
 import Select from 'react-select';
 import chroma from 'chroma-js';
+import MovieSearch from './moviesearch';
 
 class GenreFilterHeader extends React.Component {
 
@@ -70,6 +71,8 @@ class GenreFilterHeader extends React.Component {
             })}
           />
         </div>
+
+        <MovieSearch SearchMoviesHandle={this.props.SearchMoviesHandle} />
 
       </div>
 

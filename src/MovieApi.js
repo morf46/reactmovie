@@ -39,13 +39,18 @@ export function getMovieByTitle(name) {
  * 
  * @param {bool} ascending - Return movies in ascending order
  * @param {number|Array} [FilterGenreIDs] - Genre IDs to filter
+ * @param {string} [SearchTerm] - Search Term
  */
-export function getMoviesRating(ascending, FilterGenreIDs) {
+export function getMoviesRating(ascending, FilterGenreIDs, SearchTerm) {
     let LocalData = data;
 
-    if (FilterGenreIDs !== undefined && FilterGenreIDs.length > 0) {
+    if (FilterGenreIDs !== null && FilterGenreIDs !== undefined && FilterGenreIDs.length > 0) {
 
         LocalData = data.filter(movie => FilterGenreIDs.every(GenreID => movie.genre_ids.includes(GenreID)));
+    }
+
+    if (SearchTerm !== null && SearchTerm !== undefined && SearchTerm.length > 2) {
+        LocalData = LocalData.filter(movie => movie.title.toLowerCase().includes(SearchTerm.toLowerCase()));
     }
 
     return LocalData.sort((a, b) => {
