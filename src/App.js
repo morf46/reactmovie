@@ -5,19 +5,19 @@ import Footer from './components/footer';
 import Header from './components/header';
 import MovieContainer from './components/moviecontainer';
 import GenreFilterHeader from './components/GenreFilterHeader';
+import MovieDetail from './components/moviedetail';
 
 import * as MovieApi from './MovieApi.js';
 
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faFacebook, faTwitter, faSnapchat, faInstagram, faImdb } from '@fortawesome/free-brands-svg-icons'
-import { faHeart, faStar } from '@fortawesome/free-solid-svg-icons'
+import { faHeart, faStar, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 
 
 
+library.add(faFacebook, faTwitter, faSnapchat, faInstagram, faImdb, faHeart, faStar, faArrowLeft);
 
-
-library.add(faFacebook, faTwitter, faSnapchat, faInstagram, faImdb, faHeart, faStar);
 
 class App extends React.Component {
   constructor(props) {
@@ -25,14 +25,19 @@ class App extends React.Component {
 
     this.state = {
       popular: MovieApi.getPopularMovies(),
-      movies: MovieApi.getMoviesRating(false),
+      movies: null,
       searchTerm: null,
-      genreID: null
+      genreID: null,
+      SelectedMovie: null
     };
 
 
     this.filterByGenre = this.filterByGenre.bind(this);
     this.filterBySearchTerm = this.filterBySearchTerm.bind(this);
+    this.setSelectedMovie = this.setSelectedMovie.bind(this);
+    this.RetrieveSearchMovies = this.RetrieveSearchMovies.bind(this);
+    this.clearMovieSearch = this.clearMovieSearch.bind(this);
+    this.clearSelectedMovie = this.clearSelectedMovie.bind(this);
   }
 
   /**
@@ -40,22 +45,79 @@ class App extends React.Component {
    * 
    * @param {number} GenreID 
    */
-  filterByGenre(GenreID) {
-    this.setState({ movies: MovieApi.getMoviesRating(false, GenreID, this.state.searchTerm), genreID: GenreID });
+  async filterByGenre(GenreID) {
+    let FilteredMovies = await MovieApi.getMoviesRating(false, GenreID, this.state.searchTerm);
+    this.setState({ movies: FilteredMovies, genreID: GenreID });
   }
 
+
+
+  /**
+   * Clears any movie search
+   */
+  clearMovieSearch() {
+    this.filterBySearchTerm(null);
+  }
   /**
    * Filters movies by SearchTerm
    * 
    * @param {string} SearchTerm 
    */
-  filterBySearchTerm(SearchTerm) {
-
-    this.setState({ movies: MovieApi.getMoviesRating(false, this.state.genreID, SearchTerm), searchTerm: SearchTerm });
+  async filterBySearchTerm(SearchTerm) {
+    let FilteredMovies = await MovieApi.getMoviesRating(false, this.state.genreID, SearchTerm);
+    this.setState({ movies: FilteredMovies, searchTerm: SearchTerm });
 
   }
 
+  /**
+   * Retrieve Search Results and set states
+   * 
+   * @param {Movies|Array} NewMovieSearchResults - Json from response containing movies
+   * @param {string} SearchTerm 
+   */
+  RetrieveSearchMovies(NewMovieSearchResults, SearchTerm) {
+
+    if (NewMovieSearchResults) {
+      MovieApi.AppendNewMovies(NewMovieSearchResults);
+    }
+
+    this.filterBySearchTerm(SearchTerm);
+
+  }
+
+  /**
+   * Sets a new Movie as Selection
+   * 
+   * @param {object} NewMovie - the new movie.
+   */
+  setSelectedMovie(NewMovie) {
+
+    this.setState({ SelectedMovie: NewMovie });
+
+  }
+
+  /**
+   * 
+   * Clears Sleected Movie
+   * 
+   */
+  clearSelectedMovie() {
+    this.setSelectedMovie(null);
+  }
+
+  async componentDidMount() {
+    let FilteredMovies = await MovieApi.getMoviesRating(false);
+    this.setState({
+      movies: FilteredMovies,
+
+    });
+
+  }
+
+
   render() {
+
+
 
     return (
 
@@ -67,9 +129,16 @@ class App extends React.Component {
         <Header popular={this.state.popular} />
 
 
-        <GenreFilterHeader filterByGenreFunc={this.filterByGenre} SearchMoviesHandle={this.filterBySearchTerm} />
 
-        <MovieContainer movies={this.state.movies} />
+
+        {this.state.SelectedMovie ? (
+          <MovieDetail ClickBackHandle={this.clearSelectedMovie} movie={this.state.SelectedMovie} />
+        ) : (
+            <div>
+              <GenreFilterHeader filterByGenreFunc={this.filterByGenre} SearchMoviesHandle={this.RetrieveSearchMovies} />
+              <MovieContainer movies={this.state.movies} SetSelectedMovieHandle={this.setSelectedMovie} />
+            </div>
+          )}
 
 
         <Footer />

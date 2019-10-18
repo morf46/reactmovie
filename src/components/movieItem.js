@@ -6,12 +6,16 @@ import MovieItemGenreList from './movieitemgenrelist';
 
 class MovieItem extends React.Component {
 
+
+
+
     render() {
-        const { movie } = this.props;
+        const { movie, SetSelectedMovieHandle } = this.props;
+
 
         return (
             <div>
-                <figure className="movie-item m-2" style={{ width: "14em" }} >
+                <figure className="movie-item m-2" style={{ width: "14em" }} onClick={() => SetSelectedMovieHandle(movie)}>
                     <img className="img-fluid" src={ImageBaseUrl + posterSizes['342'] + this.props.movie.poster_path} alt="Movie Poster" />
 
                     <figcaption>

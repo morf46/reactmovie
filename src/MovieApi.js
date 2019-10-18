@@ -1,5 +1,37 @@
 import * as Math from './libs/MathLib.js';
+import Nedb from 'nedb-promises';
+
+
 const data = require('./movies/moviesDB.json');
+
+var db = Nedb.create({ filename: 'deleteme.db' });
+db.on('load', (db) => {
+    InitDatabase();
+
+});
+db.load();
+db.ensureIndex({ fieldName: 'id', unique: true });
+
+/**
+ * Initial database Fill.
+ * Does nothing if IndexedDB has data.
+ */
+export function InitDatabase() {
+    db.find({ initialData: true })
+        .then(docs => {
+            if (docs.length === 0) {
+
+                db.insert(data)
+                    .then(docs => {
+                        db.insert({ initialData: true })
+                            .then(function () {
+
+                            })
+
+                    });
+            }
+        });
+}
 
 /**
  * Movie's type.
@@ -26,11 +58,12 @@ export function getMovieById(id) {
 * Returns Movie found by its title.
 *
 * @param {string} name - Movie's title.
-* @returns {Movie|null} - Movie if founded, else returns null.
+* @returns {Movie|null} - Movie if found, else returns null.
 */
-export function getMovieByTitle(name) {
+export async function getMovieByTitle(name) {
+    var regex = new RegExp(name, "gi");
     return data.find(function (Movie) {
-        return Movie.title === name;
+        return Movie.title.match(regex);
     }) || null;
 }
 
@@ -40,27 +73,30 @@ export function getMovieByTitle(name) {
  * @param {bool} ascending - Return movies in ascending order
  * @param {number|Array} [FilterGenreIDs] - Genre IDs to filter
  * @param {string} [SearchTerm] - Search Term
+ * 
+ * @returns {Movie|Array} - Returns Movie Array.
  */
-export function getMoviesRating(ascending, FilterGenreIDs, SearchTerm) {
-    let LocalData = data;
+export async function getMoviesRating(ascending, FilterGenreIDs, SearchTerm) {
+    var GenreQuery = {};
+    var SearchTermQuery = {};
+    var ExludeQuery = { initialData: { $exists: false } }
 
     if (FilterGenreIDs !== null && FilterGenreIDs !== undefined && FilterGenreIDs.length > 0) {
-
-        LocalData = data.filter(movie => FilterGenreIDs.every(GenreID => movie.genre_ids.includes(GenreID)));
+        GenreQuery = { genre_ids: { $in: FilterGenreIDs } };
     }
 
     if (SearchTerm !== null && SearchTerm !== undefined && SearchTerm.length > 2) {
-        LocalData = LocalData.filter(movie => movie.title.toLowerCase().includes(SearchTerm.toLowerCase()));
+        var regex = new RegExp(SearchTerm, "gi");
+        SearchTermQuery = { title: regex };
     }
 
-    return LocalData.sort((a, b) => {
-        if (ascending === true) {
+    // Sort oder ascending == 1 || descending ==-1
+    const sortOrder = ascending ? 1 : -1;
 
-            return a.vote_average - b.vote_average;
-        } else {
-            return b.vote_average - a.vote_average;
-        }
-    });
+    let LocalData = await db.find({ $and: [GenreQuery, SearchTermQuery, ExludeQuery] }).sort({ popularity: -1,vote_average: sortOrder, vote_count:-1}).exec();
+
+    return LocalData;
+
 }
 
 /**
@@ -95,4 +131,19 @@ export function getPopularMovies() {
     return LocalArray;
 
 }
+
+/**
+ * Append new movies to database
+ * 
+ * @param {Movie|Array} MovieArray  - Movie array to append
+ */
+
+export function AppendNewMovies(MovieArray) {
+
+    MovieArray.forEach(element => {
+       db.insert(element).then();
+    });
+}
+
+
 

@@ -1,0 +1,16 @@
+.input-dark{
+
+background: none;
+  color:$yellow; 
+  border-color:$orange; 
+}
+
+.input-dark:focus{
+
+    background: none;
+      color:$yellow;  
+      border-color:$yellow; 
+      box-shadow:0px 0px 0px 0.2rem $orange;
+    }
+    
+    
