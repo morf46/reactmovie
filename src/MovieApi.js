@@ -81,8 +81,26 @@ export async function getMoviesRating(ascending, FilterGenreIDs, SearchTerm) {
     var SearchTermQuery = {};
     var ExludeQuery = { initialData: { $exists: false } }
 
+
+
     if (FilterGenreIDs !== null && FilterGenreIDs !== undefined && FilterGenreIDs.length > 0) {
-        GenreQuery = { genre_ids: { $in: FilterGenreIDs } };
+
+        /**
+         * Nedb does not implement $all query.
+         * expand genrefilter and build $and query.
+         * { 
+         *   $and: 
+         *      [
+         *       {"genre_ids": 1},
+         *       {"genre_ids": 2},
+         *       {"genre_ids": 3}
+         *  ]
+         *}
+         */
+
+        const expandgenrefilter = FilterGenreIDs.map(Genreid => { return { genre_ids: Genreid } });
+        GenreQuery = { $and: expandgenrefilter }
+
     }
 
     if (SearchTerm !== null && SearchTerm !== undefined && SearchTerm.length > 2) {
@@ -93,7 +111,7 @@ export async function getMoviesRating(ascending, FilterGenreIDs, SearchTerm) {
     // Sort oder ascending == 1 || descending ==-1
     const sortOrder = ascending ? 1 : -1;
 
-    let LocalData = await db.find({ $and: [GenreQuery, SearchTermQuery, ExludeQuery] }).sort({ popularity: -1,vote_average: sortOrder, vote_count:-1}).exec();
+    let LocalData = await db.find({ $and: [GenreQuery, SearchTermQuery, ExludeQuery] }).sort({ popularity: -1, vote_average: sortOrder, vote_count: -1 }).exec();
 
     return LocalData;
 
@@ -141,8 +159,30 @@ export function getPopularMovies() {
 export function AppendNewMovies(MovieArray) {
 
     MovieArray.forEach(element => {
-       db.insert(element).then();
+        db.insert(element);
     });
+}
+
+/**
+ * Updates Movies details to local database.
+ * 
+ * @param {Movie} Movie 
+ */
+export async function UpdateMovieDetails(Movie) {
+
+    var FoundData = await db.findOne({ id: Movie.id });
+    if (FoundData) {
+
+        const MergedData = { ...FoundData, ...Movie };
+        await db.update({ id: Movie.id }, MergedData, { upsert: true });
+        return MergedData;
+
+    } else {
+        //incase movie dont exist fill genre_ids array and insert
+        Movie['genre_ids'] = Movie.genres.map(genre => genre.id);
+        await db.insert(Movie);
+        return Movie;
+    }
 }
 
 

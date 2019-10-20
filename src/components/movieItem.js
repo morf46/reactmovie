@@ -7,8 +7,7 @@ import MovieItemGenreList from './movieitemgenrelist';
 class MovieItem extends React.Component {
 
 
-
-
+   
     render() {
         const { movie, SetSelectedMovieHandle } = this.props;
 

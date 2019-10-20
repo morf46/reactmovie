@@ -48,10 +48,13 @@ class MovieSearch extends React.Component {
                         throw new Error('Something went wrong ...');
                     } else {
 
-                        this.props.SearchMoviesHandle(response.json(), SearchTerm)
+                        return response.json();
                     }
 
-                }).catch((error) => {
+                }).then(data =>
+                    this.props.SearchMoviesHandle(data, SearchTerm)
+                    )
+                .catch((error) => {
                     this.props.SearchMoviesHandle(null, SearchTerm)
                     console.error(error);
                 });
