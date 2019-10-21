@@ -1,6 +1,7 @@
 import React from 'react';
 import './css/bootstrap.scss';
 
+import { HashRouter, Switch, Route } from "react-router-dom";
 import Footer from './components/footer';
 import Header from './components/header';
 import MovieContainer from './components/moviecontainer';
@@ -30,6 +31,7 @@ class App extends React.Component {
       genreID: null,
       SelectedMovie: null
     };
+
 
 
     this.filterByGenre = this.filterByGenre.bind(this);
@@ -106,6 +108,7 @@ class App extends React.Component {
   }
 
   async componentDidMount() {
+
     let FilteredMovies = await MovieApi.getMoviesRating(false);
     this.setState({
       movies: FilteredMovies,
@@ -121,28 +124,30 @@ class App extends React.Component {
 
     return (
 
-
-      <div className="App">
-
-
-
-        <Header popular={this.state.popular} />
+      <HashRouter>
+        <div className="App">
 
 
 
+          <Header popular={this.state.popular} />
 
-        {this.state.SelectedMovie ? (
-          <MovieDetail ClickBackHandle={this.clearSelectedMovie} movie={this.state.SelectedMovie} />
-        ) : (
-            <div>
+
+          <Switch>
+
+            
+            <Route exact path="/movie/:id" component={MovieDetail} />
+
+            <Route>
               <GenreFilterHeader filterByGenreFunc={this.filterByGenre} SearchMoviesHandle={this.RetrieveSearchMovies} />
               <MovieContainer movies={this.state.movies} SetSelectedMovieHandle={this.setSelectedMovie} />
-            </div>
-          )}
+            </Route>
+
+          </Switch>
 
 
-        <Footer />
-      </div>
+          <Footer />
+        </div>
+      </HashRouter>
     );
   }
 }

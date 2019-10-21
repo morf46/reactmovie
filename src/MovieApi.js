@@ -2,9 +2,9 @@ import * as Math from './libs/MathLib.js';
 import Nedb from 'nedb-promises';
 
 
-const data = require('./movies/moviesDB.json');
+const dbFillData = require('./movies/moviesDB.json');
 
-var db = Nedb.create({ filename: 'deleteme.db' });
+export var db = Nedb.create({ filename: 'deleteme.db', timestampData: true });
 db.on('load', (db) => {
     InitDatabase();
 
@@ -21,7 +21,7 @@ export function InitDatabase() {
         .then(docs => {
             if (docs.length === 0) {
 
-                db.insert(data)
+                db.insert(dbFillData)
                     .then(docs => {
                         db.insert({ initialData: true })
                             .then(function () {
@@ -44,13 +44,11 @@ export function InitDatabase() {
 /**
  * Returns Movie found by its id.
  *
- * @param {number} id - Movie's id.
- * @returns {Movie|null} - Movie if founded, else returns null.
+ * @param {number} MovieID - Movie's id.
+ * @returns {Movie|null} - Movie if found, else returns null.
  */
-export function getMovieById(id) {
-    return data.find(function (Movie) {
-        return Movie.id === id;
-    }) || null;
+export async function getMovieById(MovieID) {
+    return await db.findOne({ id: MovieID });
 }
 
 
@@ -62,9 +60,7 @@ export function getMovieById(id) {
 */
 export async function getMovieByTitle(name) {
     var regex = new RegExp(name, "gi");
-    return data.find(function (Movie) {
-        return Movie.title.match(regex);
-    }) || null;
+    return await db.findOne({ title: regex });
 }
 
 /**
@@ -125,11 +121,9 @@ export async function getMoviesRating(ascending, FilterGenreIDs, SearchTerm) {
 */
 export function getMovieAtRandom() {
 
+    var rndId = Math.getRandomInt(0, dbFillData.length);
 
-
-    var rndId = Math.getRandomInt(0, data.length);
-
-    return data[rndId];
+    return dbFillData[rndId];
 
 }
 
@@ -173,7 +167,8 @@ export async function UpdateMovieDetails(Movie) {
     var FoundData = await db.findOne({ id: Movie.id });
     if (FoundData) {
 
-        const MergedData = { ...FoundData, ...Movie };
+
+        const MergedData = { ...FoundData, ...Movie, MergedWithAPI: true };
         await db.update({ id: Movie.id }, MergedData, { upsert: true });
         return MergedData;
 

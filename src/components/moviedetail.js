@@ -2,23 +2,40 @@ import React from 'react';
 import { ImageBaseUrl, posterSizes } from '../libs/staticData';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import '../css/moviedetail.css';
-import { UpdateMovieDetails } from '../MovieApi';
+import { UpdateMovieDetails, getMovieById } from '../MovieApi';
+
+
 
 class MovieDetail extends React.Component {
 
     constructor(props) {
         super(props);
+        this.state = { hasError: false };
+    }
 
-        this.state = {
-            movie: props.movie
+
+    async  componentDidMount() {
+        const movieID = parseInt(this.props.match.params['id']);
+
+        const Movie = await getMovieById(movieID);
+
+        if (Movie) {
+            this.setState({ movie: Movie });
+            var hours = Math.abs(Date.now() - Movie.updatedAt) / (60 * 60 * 1000);
+
+            if (hours > 24 || !Movie.MergedWithAPI) {
+                this.fetchMovieID(movieID);
+            }
+            return;
+        } else {
+            this.fetchMovieID(movieID);
         }
     }
 
-    componentDidMount() {
-        const { id } = this.props.movie;
 
+    fetchMovieID(movieID) {
         return fetch(
-            `https://localhost:44301/movie/details/${id}`,
+            `https://localhost:44301/movie/details/${movieID}`,
             {
                 method: 'GET'
             }
@@ -38,19 +55,26 @@ class MovieDetail extends React.Component {
             }
             )
             .catch((error) => {
-
                 console.error(error);
             });
-
     }
 
+
+
+
     render() {
+        if (!this.state.movie) {
+            return (
+                <div className="container">
+                    <h2>Something went wrong.</h2>
+                </div>
+            );
+        }
+
+
         const { poster_path, title, original_title, vote_average, overview, videos, images } = this.state.movie;
         return (
             <div className="container">
-
-                <FontAwesomeIcon icon="arrow-left" size="6x" className="back-arrow mr-2 mb-2" onClick={() => this.props.ClickBackHandle("")} />
-
                 <div className="row">
                     <div className="col-4">
                         <img className="img-fluid" src={ImageBaseUrl + posterSizes['500'] + poster_path} alt="Movie Poster " />
@@ -76,7 +100,7 @@ class MovieDetail extends React.Component {
                         {
                             images && images.posters && images.posters.slice(0, 5).map(image =>
                                 <div key={image.file_path}>
-                                    <img src={ImageBaseUrl + posterSizes['500'] + image.file_path} alt="Movie Poster"/>
+                                    <img src={ImageBaseUrl + posterSizes['500'] + image.file_path} alt="Movie Poster" />
                                 </div>
                             )
                         }

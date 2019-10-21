@@ -3,19 +3,24 @@ import { text_truncate } from '../libs/textLib';
 import { ImageBaseUrl, posterSizes } from '../libs/staticData'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import MovieItemGenreList from './movieitemgenrelist';
+import { Link } from "react-router-dom";
 
 class MovieItem extends React.Component {
 
 
-   
+
     render() {
         const { movie, SetSelectedMovieHandle } = this.props;
 
 
         return (
             <div>
-                <figure className="movie-item m-2" style={{ width: "14em" }} onClick={() => SetSelectedMovieHandle(movie)}>
-                    <img className="img-fluid" src={ImageBaseUrl + posterSizes['342'] + this.props.movie.poster_path} alt="Movie Poster" />
+
+
+                <figure className="movie-item m-2" style={{ width: "14em" }}>
+                    <Link to={"/Movie/" + movie.id}>
+                        <img className="img-fluid" src={ImageBaseUrl + posterSizes['342'] + this.props.movie.poster_path} alt="Movie Poster" />
+                    </Link>
 
                     <figcaption>
                         <h5 className="movie-item-caption">{text_truncate(movie.title, 26)}</h5>
