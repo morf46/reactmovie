@@ -15,7 +15,7 @@ class MovieSearch extends React.Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleKeyDown = this.handleKeyDown.bind(this);
-        this.SearchMovies = debounce(this.SearchMovies, 500);
+        this.SearchMovies = debounce(this.SearchMovies, 250);
     }
 
 
@@ -79,7 +79,7 @@ class MovieSearch extends React.Component {
                     aria-label="Search"
                     onChange={this.handleChange}
                     onKeyDown={this.handleKeyDown}
-                    onclear />
+                    />
             </div>
         );
     }

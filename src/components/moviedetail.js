@@ -3,6 +3,8 @@ import { ImageBaseUrl, posterSizes } from '../libs/staticData';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import '../css/moviedetail.css';
 import { UpdateMovieDetails, getMovieById } from '../MovieApi';
+import VideoDetail from './moviedetailvideos';
+import ImageDetail from './moviedetailimages';
 
 
 
@@ -90,18 +92,14 @@ class MovieDetail extends React.Component {
                     <div className="col-6">
                         {
                             videos && videos.results && videos.results.slice(0, 5).map(video =>
-                                <p key={video.id}>
-                                    <iframe title={video.name} width="560" height="315" src={"https://www.youtube.com/embed/" + video.key} frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-                                </p>
+                                <VideoDetail key={video.id} video={video} />
                             )
                         }
                     </div>
                     <div className="col-6">
                         {
                             images && images.posters && images.posters.slice(0, 5).map(image =>
-                                <div key={image.file_path}>
-                                    <img src={ImageBaseUrl + posterSizes['500'] + image.file_path} alt="Movie Poster" />
-                                </div>
+                                <ImageDetail key={image.file_path} image={image} />
                             )
                         }
                     </div>
