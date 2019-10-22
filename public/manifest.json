@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Movie DB",
+  "name": "Simple movie database site created with React",
   "icons": [
     {
       "src": "favicon.ico",

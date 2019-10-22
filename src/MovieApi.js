@@ -142,10 +142,16 @@ export function getMovieAtRandom() {
 export function getPopularMovies() {
 
     var LocalArray = [];
+    //Prefill with specific movies
 
-    for (let i = 0; i < 5; i++) {
-        LocalArray.push(getMovieAtRandom());
-    }
+    
+    LocalArray.push(dbFillData.find(movie=> movie.id === 299536));
+    LocalArray.push(dbFillData.find(movie=> movie.id === 324857));
+    LocalArray.push(dbFillData.find(movie=> movie.id === 769));
+    LocalArray.push(dbFillData.find(movie=> movie.id === 283995));
+    LocalArray.push(dbFillData.find(movie=> movie.id === 106646));
+    
+    
 
     return LocalArray;
 
