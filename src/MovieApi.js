@@ -69,10 +69,14 @@ export async function getMovieByTitle(name) {
  * @param {bool} ascending - Return movies in ascending order
  * @param {number|Array} [FilterGenreIDs] - Genre IDs to filter
  * @param {string} [SearchTerm] - Search Term
+ * @param {bool} [FillData] - Fill with default database if empty.
  * 
  * @returns {Movie|Array} - Returns Movie Array.
  */
-export async function getMoviesRating(ascending, FilterGenreIDs, SearchTerm) {
+export async function getMoviesRating(ascending, FilterGenreIDs, SearchTerm, FillData = false) {
+
+
+
     var GenreQuery = {};
     var SearchTermQuery = {};
     var ExludeQuery = { initialData: { $exists: false } }
@@ -109,6 +113,9 @@ export async function getMoviesRating(ascending, FilterGenreIDs, SearchTerm) {
 
     let LocalData = await db.find({ $and: [GenreQuery, SearchTermQuery, ExludeQuery] }).sort({ popularity: -1, vote_average: sortOrder, vote_count: -1 }).exec();
 
+    if (FillData && LocalData.length === 0) {
+        LocalData = dbFillData;
+    }
     return LocalData;
 
 }

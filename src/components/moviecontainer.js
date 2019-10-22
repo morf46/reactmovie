@@ -18,7 +18,7 @@ class MovieContainer extends React.Component {
 
                     {movies !== null && movies !== undefined ? (
                         movies.map(movie =>
-                            <MovieItem key={movie.id} movie={movie} SetSelectedMovieHandle={this.props.SetSelectedMovieHandle} />
+                            <MovieItem key={movie.id} movie={movie} />
                         )
                     ) : (
                             <div></div>

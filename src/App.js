@@ -36,10 +36,9 @@ class App extends React.Component {
 
     this.filterByGenre = this.filterByGenre.bind(this);
     this.filterBySearchTerm = this.filterBySearchTerm.bind(this);
-    this.setSelectedMovie = this.setSelectedMovie.bind(this);
     this.RetrieveSearchMovies = this.RetrieveSearchMovies.bind(this);
     this.clearMovieSearch = this.clearMovieSearch.bind(this);
-    this.clearSelectedMovie = this.clearSelectedMovie.bind(this);
+
   }
 
   /**
@@ -87,29 +86,13 @@ class App extends React.Component {
 
   }
 
-  /**
-   * Sets a new Movie as Selection
-   * 
-   * @param {object} NewMovie - the new movie.
-   */
-  setSelectedMovie(NewMovie) {
 
-    this.setState({ SelectedMovie: NewMovie });
 
-  }
 
-  /**
-   * 
-   * Clears Sleected Movie
-   * 
-   */
-  clearSelectedMovie() {
-    this.setSelectedMovie(null);
-  }
 
   async componentDidMount() {
 
-    let FilteredMovies = await MovieApi.getMoviesRating(false);
+    let FilteredMovies = await MovieApi.getMoviesRating(false, [], "", true);
     this.setState({
       movies: FilteredMovies,
 
@@ -134,12 +117,12 @@ class App extends React.Component {
 
           <Switch>
 
-            
+
             <Route exact path="/movie/:id" component={MovieDetail} />
 
             <Route>
               <GenreFilterHeader filterByGenreFunc={this.filterByGenre} SearchMoviesHandle={this.RetrieveSearchMovies} />
-              <MovieContainer movies={this.state.movies} SetSelectedMovieHandle={this.setSelectedMovie} />
+              <MovieContainer movies={this.state.movies} />
             </Route>
 
           </Switch>

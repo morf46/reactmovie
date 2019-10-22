@@ -10,7 +10,7 @@ class MovieItem extends React.Component {
 
 
     render() {
-        const { movie, SetSelectedMovieHandle } = this.props;
+        const { movie } = this.props;
 
 
         return (

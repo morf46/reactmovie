@@ -15,7 +15,7 @@ class MovieSearch extends React.Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleKeyDown = this.handleKeyDown.bind(this);
-        this.SearchMovies = debounce(this.SearchMovies, 250);
+        this.SearchMovies = debounce(this.SearchMovies, 150);
     }
 
 
