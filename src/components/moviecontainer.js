@@ -17,7 +17,7 @@ class MovieContainer extends React.Component {
                 <section style={{ minHeight: "100vh", display: "flex", flexWrap: "wrap", alignItems: "flex-start", justifyContent: "space-between" }}>
 
                     {movies !== null && movies !== undefined ? (
-                        movies.map(movie =>
+                        movies.slice(0,80).map(movie =>
                             <MovieItem key={movie.id} movie={movie} />
                         )
                     ) : (
