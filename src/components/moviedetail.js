@@ -37,7 +37,7 @@ class MovieDetail extends React.Component {
 
     fetchMovieID(movieID) {
         return fetch(
-            `https://localhost:44301/movie/details/${movieID}`,
+            `http://h2844272.stratoserver.net/api/movie/details/${movieID}`,
             {
                 method: 'GET'
             }

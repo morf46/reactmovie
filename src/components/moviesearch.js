@@ -38,7 +38,7 @@ class MovieSearch extends React.Component {
         if (SearchTerm && SearchTerm.length > 2) {
             const queryString = `${SearchTerm}`;
             return fetch(
-                `https://localhost:44301/movie/search/${queryString}`,
+                `http://h2844272.stratoserver.net/api//movie/search/${queryString}`,
                 {
                     method: 'GET'
                 }
