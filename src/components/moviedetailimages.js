@@ -12,7 +12,7 @@ class ImageDetail extends React.Component {
 
         return (
             
-                <img src={ImageBaseUrl + posterSizes['500'] + image.file_path} alt="Movie Poster" />
+                <img src={ImageBaseUrl + posterSizes['342'] + image.file_path} alt="Movie Poster" />
             
         )
     }

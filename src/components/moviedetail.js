@@ -13,6 +13,12 @@ class MovieDetail extends React.Component {
     constructor(props) {
         super(props);
         this.state = { hasError: false };
+
+        this.OnClickBack = this.OnClickBack.bind(this);
+    }
+
+    OnClickBack() {
+        this.props.history.goBack();
     }
 
 
@@ -74,37 +80,53 @@ class MovieDetail extends React.Component {
         }
 
 
-        const { poster_path, title, original_title, vote_average, overview, videos, images } = this.state.movie;
+        const { poster_path, title, original_title, vote_average, overview, videos, images, imdb_id } = this.state.movie;
+        const moviePosterPath = poster_path ?
+            ImageBaseUrl + posterSizes['500'] + poster_path : process.env.PUBLIC_URL + '/noimage.jpg'
         return (
             <div className="container">
+                <button className="btn btn-link" onClick={() => this.OnClickBack()}>
+                    <FontAwesomeIcon icon="arrow-left" size="2x" className="back-arrow mr-2 mb-2 align-middle" />
+                    Go Back.
+                </button>
+
                 <div className="row">
                     <div className="col-4">
-                        <img className="img-fluid" src={ImageBaseUrl + posterSizes['500'] + poster_path} alt="Movie Poster " />
+                        <img className="img-fluid" src={moviePosterPath} alt="Movie Poster " />
                     </div>
                     <div className="col-8">
                         <h2 className="display-4">{title}</h2>
                         <p className="lead">
+                            <FontAwesomeIcon icon="star" className="mr-2 mb-2 rating-icon align-middle" size="1x" />
                             <span>{vote_average}</span>
-                            <span>{original_title}</span>
+                            <FontAwesomeIcon className="ml-2" icon={["fab", "imdb"]} size="1x" />
+                            <a href={"http://www.imdb.com/title/" + imdb_id + "/"} target="_blank" rel="noopener noreferrer">IMDb</a>
+
                         </p>
-                        <p className="mt-4">{overview}</p>
+
+                        <h4>Overview</h4>
+                        <p className="mt-2">{overview}</p>
                     </div>
-                    <div className="col-6">
+                    <h4>Posters</h4>
+                    <div className="col-12">
                         {
-                            videos && videos.results && videos.results.slice(0, 5).map(video =>
-                                <VideoDetail key={video.id} video={video} />
-                            )
-                        }
-                    </div>
-                    <div className="col-6">
-                        {
-                            images && images.posters && images.posters.slice(0, 5).map(image =>
+                            images && images.posters && images.posters.slice(0, 6).map(image =>
                                 <ImageDetail key={image.file_path} image={image} />
                             )
                         }
                     </div>
+                    <h4>Videos</h4>
+                    <div className="col-12">
+                        {
+
+                            videos && videos.results && videos.results.slice(0, 1).map(video =>
+                                <VideoDetail key={video.id} video={video} />
+                            )
+                        }
+                    </div>
+
                 </div>
-            </div>
+            </div >
         );
     }
 }

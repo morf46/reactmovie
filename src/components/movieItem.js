@@ -11,7 +11,8 @@ class MovieItem extends React.Component {
 
     render() {
         const { movie } = this.props;
-
+        const moviePosterPath = this.props.movie.poster_path ?
+            ImageBaseUrl + posterSizes['342'] + this.props.movie.poster_path : process.env.PUBLIC_URL + '/noimage.jpg'
 
         return (
             <div>
@@ -19,7 +20,7 @@ class MovieItem extends React.Component {
 
                 <figure className="movie-item m-2" style={{ width: "14em" }}>
                     <Link to={"/Movie/" + movie.id}>
-                        <img className="img-fluid" src={ImageBaseUrl + posterSizes['342'] + this.props.movie.poster_path} alt="Movie Poster" />
+                        <img className="img-fluid" src={moviePosterPath} alt="Movie Poster" />
                     </Link>
 
                     <figcaption>
