@@ -16,7 +16,7 @@
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.1.1",
+    "react-scripts": "5.0.1",
     "react-select": "^3.0.8",
     "react-spinners-css": "^1.1.7",
     "swipejs": "^2.2.14",
